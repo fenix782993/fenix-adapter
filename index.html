@@ -40,7 +40,7 @@
             border-color: #ff0055;
         }
 
-        /* Простой CSS-эффект глитча для баннера при наведении */
+        /* Эффект глитча для баннера при наведении */
         .banner-container {
             overflow: hidden;
             position: relative;
@@ -86,7 +86,6 @@
             transform-origin: bottom;
             transform: scaleY(0.1);
         }
-        /* Анимация прыгающих полосок (активируется классом .playing) */
         .equalizer.playing .bar {
             animation: bounce 0.8s ease infinite alternate;
         }
@@ -98,6 +97,52 @@
         @keyframes bounce {
             0% { transform: scaleY(0.1); }
             100% { transform: scaleY(1); }
+        }
+
+        /* --- СУПЕР КРАСИВАЯ АСИММЕТРИЧНАЯ СЕТКА КНОПОК --- */
+        .links-grid {
+            width: 100%;
+            display: grid;
+            /* Разбиваем на 3 колонки для сложной геометрии */
+            grid-template-columns: repeat(6, 1fr); 
+            gap: 18px;
+            margin-bottom: 40px;
+        }
+
+        /* Настройка индивидуального положения каждой кнопки */
+        .btn-tg-channel {
+            grid-column: span 3; /* Половина верхнего ряда */
+        }
+        .btn-community-chat {
+            grid-column: span 3; /* Второй кусок верхнего ряда */
+        }
+        .btn-get-vpn {
+            grid-column: span 6; /* Мощная кнопка во всю ширину по центру */
+            font-size: 20px !important;
+            padding: 26px 15px !important;
+            letter-spacing: 4px !important;
+        }
+        .btn-buy-stars {
+            grid-column: span 2; /* Узкая кнопка слева внизу */
+        }
+        .btn-contact-admin {
+            grid-column: span 4; /* Более широкая кнопка справа от звезд */
+        }
+        .btn-like-adapter {
+            grid-column: span 6; /* Финальный аккорд — кнопка лайка на всю ширину снизу */
+            padding: 22px 15px !important;
+        }
+
+        /* Адаптивность для мобилок, чтобы интерфейс оставался читаемым */
+        @media (max-width: 600px) {
+            .links-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .btn-tg-channel, .btn-community-chat, .btn-get-vpn, 
+            .btn-buy-stars, .btn-contact-admin, .btn-like-adapter {
+                grid-column: span 1 !important;
+            }
         }
     </style>
 </head>
@@ -142,32 +187,32 @@
         </div>
 
         <main class="links-grid">
-            <a href="https://t.me/qfenixqa" target="_blank" class="cyber-btn" data-scramble="ТГ КАНАЛ">
+            <a href="https://t.me/qfenixqa" target="_blank" class="cyber-btn btn-tg-channel" data-scramble="ТГ КАНАЛ">
                 <span class="btn-text">ТГ КАНАЛ</span>
                 <span class="btn-glitch">TG_CHANNEL</span>
             </a>
 
-            <a href="https://t.me/+-x9fbyWpSj85NmFl" target="_blank" class="cyber-btn" data-scramble="НАШ ЧАТ">
+            <a href="https://t.me/+-x9fbyWpSj85NmFl" target="_blank" class="cyber-btn btn-community-chat" data-scramble="НАШ ЧАТ">
                 <span class="btn-text">НАШ ЧАТ</span>
                 <span class="btn-glitch">COMMUNITY_CHAT</span>
             </a>
 
-            <a href="https://t.me/fenixVPNrobot" target="_blank" class="cyber-btn special" data-scramble="КУПИТЬ VPN">
+            <a href="https://t.me/fenixVPNrobot" target="_blank" class="cyber-btn special btn-get-vpn" data-scramble="КУПИТЬ VPN">
                 <span class="btn-text">КУПИТЬ VPN</span>
                 <span class="btn-glitch">GET_VPN</span>
             </a>
 
-            <a href="https://t.me/Fenix_stars_bot" target="_blank" class="cyber-btn" data-scramble="КУПИТЬ ЗВЕЗДЫ">
+            <a href="https://t.me/Fenix_stars_bot" target="_blank" class="cyber-btn btn-buy-stars" data-scramble="КУПИТЬ ЗВЕЗДЫ">
                 <span class="btn-text">КУПИТЬ ЗВЕЗДЫ</span>
                 <span class="btn-glitch">BUY_STARS</span>
             </a>
 
-            <a href="https://t.me/webFenix" target="_blank" class="cyber-btn" data-scramble="ЧАТ СО МНОЙ">
+            <a href="https://t.me/webFenix" target="_blank" class="cyber-btn btn-contact-admin" data-scramble="ЧАТ СО МНОЙ">
                 <span class="btn-text">ЧАТ СО МНОЙ</span>
                 <span class="btn-glitch">CONTACT_ADMIN</span>
             </a>
 
-            <a href="https://t.me/webFenix" target="_blank" class="cyber-btn love-btn" data-scramble="ПОСТАВИТЬ ❤️">
+            <a href="https://t.me/webFenix?text=%E2%9A%A1%EF%B8%8F%20%5BPHOENIX%20ADAPTER%20FEEDBACK%5D%20%E2%9A%A1%EF%B8%8F%0A%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%0A%D0%AD%D0%B9%2C%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%21%20%D0%A1%D0%B0%D0%B4%D0%B4%D0%B0%D0%BC%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D0%B5%D1%82%20%D1%80%D0%B5%D1%81%D0%BF%D0%B5%D0%BA%D1%82.%20%D0%A1%D0%B0%D0%B9%D1%82%20%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B8%D0%BB%D1%81%D1%8F%20%D0%BC%D0%BE%D1%89%D0%BD%D1%8B%D0%B9%2C%20%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%BF%D1%91%D1%80%D0%B2%D0%B5%D1%80%D1%82%20%D0%B8%20%D0%B2%D0%B0%D0%B9%D0%B1%D0%BE%D0%B2%D1%8B%D0%B9.%20%D0%9B%D0%BE%D0%B2%D0%B8%20%D0%BB%D0%B0%D0%B9%D0%BA%21%20%E2%9D%A4%EF%B8%8F%E2%94%AC%E2%94%80%0A%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%0A%3E%20STATUS%3A%20RESPECT_SENT%20%E2%98%A2%EF%B8%8F" target="_blank" class="cyber-btn love-btn btn-like-adapter" data-scramble="ПОСТАВИТЬ ❤️">
                 <span class="btn-text">ПОСТАВИТЬ ❤️</span>
                 <span class="btn-glitch">LIKE_ADAPTER</span>
             </a>
@@ -225,7 +270,7 @@
                     if(iteration >= originalText.length) {
                         clearInterval(interval);
                     }
-                    iteration += 1 / 3; // Скорость расшифровки
+                    iteration += 1 / 3;
                 }, 30);
             });
 
