@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHOENIX ADAPTER | SECURE HUB</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <canvas id="matrix"></canvas>
+
+    <div class="container">
+        <header class="banner-container">
+            <img src="banner.png" alt="Phoenix Adapter Banner" class="main-banner">
+        </header>
+
+        <div class="terminal-status">
+            <span class="blink"> > </span> STATUS: <span class="green-glow">ONLINE</span> | BYPASS PROTOCOLS: <span class="green-glow">ACTIVE</span>
+        </div>
+
+        <main class="links-grid">
+            <a href="https://t.me/qfenixqa" target="_blank" class="cyber-btn">
+                <span class="btn-text">ТГ КАНАЛ</span>
+                <span class="btn-glitch">TG_CHANNEL</span>
+            </a>
+
+            <a href="https://t.me/+-x9fbyWpSj85NmFl" target="_blank" class="cyber-btn">
+                <span class="btn-text">НАШ ЧАТ</span>
+                <span class="btn-glitch">COMMUNITY_CHAT</span>
+            </a>
+
+            <a href="https://t.me/fenixVPNrobot" target="_blank" class="cyber-btn special">
+                <span class="btn-text">КУПИТЬ VPN</span>
+                <span class="btn-glitch">GET_VPN</span>
+            </a>
+
+            <a href="https://t.me/Fenix_stars_bot" target="_blank" class="cyber-btn">
+                <span class="btn-text">КУПИТЬ ЗВЕЗДЫ</span>
+                <span class="btn-glitch">BUY_STARS</span>
+            </a>
+
+            <a href="https://t.me/webFenix" target="_blank" class="cyber-btn">
+                <span class="btn-text">ЧАТ СО МНОЙ</span>
+                <span class="btn-glitch">CONTACT_ADMIN</span>
+            </a>
+
+            <a href="https://t.me/webFenix" target="_blank" class="cyber-btn">
+                <span class="btn-text">ПОСТАВИТЬ ❤️</span>
+                <span class="btn-glitch">LIKE_ADAPTER</span>
+            </a>
+        </main>
+
+        <footer>
+            <p>© 2026 PHOENIX ADAPTER. ALL RIGHTS RESERVED. SYSTEM: ACCESS GRANTED.</p>
+        </footer>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const katakana = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1023456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const alphabet = katakana.split('');
+
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+
+        const rainDrops = [];
+
+        for( let x = 0; x < columns; x++ ) {
+            rainDrops[x] = 1;
+        }
+
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0'; 
+            ctx.font = fontSize + 'px monospace';
+
+            for(let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if(rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975){
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+
+        setInterval(draw, 30);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
