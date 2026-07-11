@@ -144,18 +144,19 @@ body {
     font-size: 13px;
     font-weight: bold;
     letter-spacing: 1px;
-    min-height: 43px; /* Предотвращает скачок разметки при печати */
+    min-height: 43px;
 }
 
 .blink { animation: hackBlink 1s infinite; }
 .cursor { animation: hackBlink 0.7s infinite; color: #00ff66; font-weight: bold; }
 @keyframes hackBlink { 50% { opacity: 0; } }
 
-/* СЕТКА КНОПОК */
+/* ВЫРОВНЕННАЯ СЕТКА КНОПОК ДЛЯ ПК */
 .links-grid {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    /* Делаем сетку из 6 колонок для более гибкого асимметричного выравнивания */
+    grid-template-columns: repeat(6, 1fr);
     gap: 15px;
     margin-bottom: 40px;
 }
@@ -185,27 +186,33 @@ body {
     transform: translateY(-2px);
 }
 
-/* Кнопка VPN на всю ширину */
+/* Выравнивание по рядам на ПК */
+.btn-tg-channel { grid-column: span 3; } /* Первый ряд (лево) */
+.btn-community-chat { grid-column: span 3; } /* Первый ряд (право) */
+
+/* Кнопка VPN на всю ширину (Второй ряд) */
 .cyber-btn.special {
-    grid-column: span 2;
+    grid-column: span 6;
     border-color: #ff2a5f;
     color: #ff2a5f;
     font-size: 18px;
     padding: 22px 15px;
 }
-
 .cyber-btn.special:hover {
     background: #ff2a5f;
     color: #000;
     box-shadow: 0 0 35px #ff2a5f;
 }
 
-/* Кнопка ЛАЙК */
+.btn-buy-stars { grid-column: span 2; } /* Третий ряд (узкая слева) */
+.btn-contact-admin { grid-column: span 4; } /* Третий ряд (шире справа) */
+
+/* Кнопка ЛАЙК на всю ширину (Четвертый ряд) */
 .cyber-btn.love-btn {
+    grid-column: span 6;
     border-color: #d400ff;
     color: #d400ff;
 }
-
 .cyber-btn.love-btn:hover {
     background: #d400ff;
     color: #fff;
@@ -223,8 +230,97 @@ footer {
     color: #00551c;
 }
 
+/* ВЫРОВНЕННАЯ КРАСИВАЯ СЕТКА ДЛЯ ТЕЛЕФОНОВ (МОБИЛКИ) */
 @media (max-width: 600px) {
-    .links-grid { grid-template-columns: 1fr; }
-    .cyber-btn.special { grid-column: span 1; }
+    .links-grid { 
+        grid-template-columns: repeat(2, 1fr); /* 2 колонки вместо скучной 1 ленты */
+        gap: 12px;
+    }
+    .btn-tg-channel { grid-column: span 1; font-size: 13px; } /* Встают красивой парой */
+    .btn-community-chat { grid-column: span 1; font-size: 13px; }
+    
+    .cyber-btn.special { grid-column: span 2; } /* VPN жестко на всю ширину */
+    
+    .btn-buy-stars { grid-column: span 1; font-size: 13px; } /* Вторая пара кнопок */
+    .btn-contact-admin { grid-column: span 1; font-size: 13px; }
+    
+    .cyber-btn.love-btn { grid-column: span 2; } /* Лайк жестко на всю ширину */
+    
     .mute-btn { top: 5px; right: 10px; }
+}
+
+/* ХАКЕРСКАЯ МОДАЛКА */
+#custom-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+#custom-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+.modal-box {
+    background: rgba(0, 15, 5, 0.95);
+    border: 2px solid #ff0055;
+    box-shadow: 0 0 25px rgba(255, 0, 85, 0.4);
+    padding: 30px;
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    color: #ff0055;
+}
+.modal-title {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+.modal-input {
+    width: 100%;
+    background: #000;
+    border: 1px solid #00ff66;
+    color: #00ff66;
+    padding: 12px;
+    font-size: 16px;
+    font-family: monospace;
+    text-align: center;
+    outline: none;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+.modal-input:focus {
+    border-color: #ff0055;
+}
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+.modal-btn {
+    background: transparent;
+    border: 1px solid #ff0055;
+    color: #ff0055;
+    padding: 10px 20px;
+    font-family: monospace;
+    font-weight: bold;
+    cursor: pointer;
+}
+.modal-btn:hover {
+    background: #ff0055;
+    color: #000;
+}
+.modal-btn.confirm {
+    border-color: #00ff66;
+    color: #00ff66;
+}
+.modal-btn.confirm:hover {
+    background: #00ff66;
+    color: #000;
 }
