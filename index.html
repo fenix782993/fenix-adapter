@@ -35,7 +35,7 @@
         #custom-cursor::after {
             left: 50%; top: -5px; height: 30px; width: 2px; transform: translateX(-50%);
         }
-        .cyber-btn:hover ~ #custom-cursor, button:hover ~ #custom-cursor {
+        .cyber-btn:hover ~ #custom-cursor, button:hover ~ #custom-cursor, .modal-input:hover ~ #custom-cursor {
             transform: translate(-50%, -50%) scale(1.3);
             border-color: #ff0055;
         }
@@ -99,50 +99,130 @@
             100% { transform: scaleY(1); }
         }
 
-        /* --- СУПЕР КРАСИВАЯ АСИММЕТРИЧНАЯ СЕТКА КНОПОК --- */
+        /* --- СЕТКА ДЛЯ КОМПЬЮТЕРОВ (ПК) --- */
         .links-grid {
             width: 100%;
             display: grid;
-            /* Разбиваем на 3 колонки для сложной геометрии */
             grid-template-columns: repeat(6, 1fr); 
             gap: 18px;
             margin-bottom: 40px;
         }
 
-        /* Настройка индивидуального положения каждой кнопки */
-        .btn-tg-channel {
-            grid-column: span 3; /* Половина верхнего ряда */
-        }
-        .btn-community-chat {
-            grid-column: span 3; /* Второй кусок верхнего ряда */
-        }
+        .btn-tg-channel { grid-column: span 3; }
+        .btn-community-chat { grid-column: span 3; }
         .btn-get-vpn {
-            grid-column: span 6; /* Мощная кнопка во всю ширину по центру */
+            grid-column: span 6; 
             font-size: 20px !important;
             padding: 26px 15px !important;
             letter-spacing: 4px !important;
         }
-        .btn-buy-stars {
-            grid-column: span 2; /* Узкая кнопка слева внизу */
-        }
-        .btn-contact-admin {
-            grid-column: span 4; /* Более широкая кнопка справа от звезд */
-        }
+        .btn-buy-stars { grid-column: span 2; }
+        .btn-contact-admin { grid-column: span 4; }
         .btn-like-adapter {
-            grid-column: span 6; /* Финальный аккорд — кнопка лайка на всю ширину снизу */
+            grid-column: span 6; 
             padding: 22px 15px !important;
         }
 
-        /* Адаптивность для мобилок, чтобы интерфейс оставался читаемым */
+        /* --- КРАСИВАЯ СЕТКА ДЛЯ ТЕЛЕФОНОВ (МОБИЛКИ) --- */
         @media (max-width: 600px) {
             .links-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
+                padding: 0 5px;
             }
-            .btn-tg-channel, .btn-community-chat, .btn-get-vpn, 
-            .btn-buy-stars, .btn-contact-admin, .btn-like-adapter {
-                grid-column: span 1 !important;
+            .btn-tg-channel { grid-column: span 1; font-size: 13px !important;}
+            .btn-community-chat { grid-column: span 1; font-size: 13px !important;}
+            .btn-get-vpn { 
+                grid-column: span 2; 
+                font-size: 18px !important;
+                padding: 22px 10px !important;
             }
+            .btn-buy-stars { grid-column: span 1; font-size: 13px !important;}
+            .btn-contact-admin { grid-column: span 1; font-size: 13px !important;}
+            .btn-like-adapter { 
+                grid-column: span 2; 
+                padding: 18px 10px !important;
+            }
+        }
+
+        /* --- ХАКЕРСКОЕ МОДАЛЬНОЕ ОКНО ДЛЯ ВВОДА НИКА --- */
+        #custom-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #custom-modal.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-box {
+            background: rgba(0, 15, 5, 0.95);
+            border: 2px solid #ff0055;
+            box-shadow: 0 0 25px rgba(255, 0, 85, 0.4);
+            padding: 30px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            color: #ff0055;
+        }
+        .modal-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+        .modal-input {
+            width: 100%;
+            background: #000;
+            border: 1px solid #00ff66;
+            color: #00ff66;
+            padding: 12px;
+            font-size: 16px;
+            font-family: monospace;
+            text-align: center;
+            outline: none;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        .modal-input:focus {
+            border-color: #ff0055;
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .modal-btn {
+            background: transparent;
+            border: 1px solid #ff0055;
+            color: #ff0055;
+            padding: 10px 20px;
+            font-family: monospace;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        .modal-btn:hover {
+            background: #ff0055;
+            color: #000;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+        }
+        .modal-btn.confirm {
+            border-color: #00ff66;
+            color: #00ff66;
+        }
+        .modal-btn.confirm:hover {
+            background: #00ff66;
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.6);
         }
     </style>
 </head>
@@ -212,15 +292,26 @@
                 <span class="btn-glitch">CONTACT_ADMIN</span>
             </a>
 
-            <a href="https://t.me/webFenix?text=%E2%9A%A1%EF%B8%8F%20%5BPHOENIX%20ADAPTER%20FEEDBACK%5D%20%E2%9A%A1%EF%B8%8F%0A%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%0A%D0%AD%D0%B9%2C%20%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD%21%20%D0%A1%D0%B0%D0%B4%D0%B4%D0%B0%D0%BC%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D0%B5%D1%82%20%D1%80%D0%B5%D1%81%D0%BF%D0%B5%D0%BA%D1%82.%20%D0%A1%D0%B0%D0%B9%D1%82%20%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B8%D0%BB%D1%81%D1%8F%20%D0%BC%D0%BE%D1%89%D0%BD%D1%8B%D0%B9%2C%20%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%BF%D1%91%D1%80%D0%B2%D0%B5%D1%80%D1%82%20%D0%B8%20%D0%B2%D0%B0%D0%B9%D0%B1%D0%BE%D0%B2%D1%8B%D0%B9.%20%D0%9B%D0%BE%D0%B2%D0%B8%20%D0%BB%D0%B0%D0%B9%D0%BA%21%20%E2%9D%A4%EF%B8%8F%E2%94%AC%E2%94%80%0A%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%E2%95%90%0A%3E%20STATUS%3A%20RESPECT_SENT%20%E2%98%A2%EF%B8%8F" target="_blank" class="cyber-btn love-btn btn-like-adapter" data-scramble="ПОСТАВИТЬ ❤️">
+            <button id="like-trigger-btn" class="cyber-btn love-btn btn-like-adapter" data-scramble="ПОСТАВИТЬ ❤️">
                 <span class="btn-text">ПОСТАВИТЬ ❤️</span>
                 <span class="btn-glitch">LIKE_ADAPTER</span>
-            </a>
+            </button>
         </main>
 
         <footer>
             <p>© 2026 PHOENIX ADAPTER. LOAD_COMPLETE. SYSTEM: ACCESS GRANTED.</p>
         </footer>
+    </div>
+
+    <div id="custom-modal">
+        <div class="modal-box">
+            <div class="modal-title">[⚠️] ENTER YOUR REBEL_ID / NICKNAME:</div>
+            <input type="text" id="rebel-name-input" class="modal-input" placeholder="Введите ваш ник..." maxlength="25">
+            <div class="modal-buttons">
+                <button id="modal-cancel" class="modal-btn">ABORT</button>
+                <button id="modal-submit" class="modal-btn confirm">SUBMIT_HEART</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -278,6 +369,48 @@
                 clearInterval(interval);
                 textNode.innerText = originalText;
             });
+        });
+
+        // --- ИНТЕРАКТИВНАЯ МОДАЛКА ЛАЙКА И ГЕНЕРАЦИЯ ССЫЛКИ ---
+        const likeBtn = document.getElementById('like-trigger-btn');
+        const modal = document.getElementById('custom-modal');
+        const modalCancel = document.getElementById('modal-cancel');
+        const modalSubmit = document.getElementById('modal-submit');
+        const nameInput = document.getElementById('rebel-name-input');
+
+        likeBtn.addEventListener('click', () => {
+            nameInput.value = '';
+            modal.classList.add('open');
+        });
+
+        modalCancel.addEventListener('click', () => {
+            modal.classList.remove('open');
+            playBeep(400, 0.1);
+        });
+
+        modalSubmit.addEventListener('click', () => {
+            let nickname = nameInput.value.trim();
+            if (!nickname) nickname = "ANONYMOUS_REBEL";
+
+            // Новый стилизованный хакерский рапорт-сообщение
+            const messageText = `🛰 [PHOENIX HUB REPORT] 🛰\n` +
+                                `========================\n` +
+                                `• AGENT_ID: ${nickname}\n` +
+                                `• SYSTEM: PHOENIX ADAPTER v4.2\n` +
+                                `• STATUS: EXTREMELY_HIGH_QUALITY 🔥\n` +
+                                `========================\n` +
+                                `Админ, хаб получился лютейший! Сетка огонь, трек залетает на ура, визуальные глитчи — чистый перверт. Максимальный респект за работу, закидываю тебя лайками! ❤️🛸\n` +
+                                `========================\n` +
+                                `> ENCRYPTION: SECURE_LINK_PASS_✅`;
+
+            const encodedText = encodeURIComponent(messageText);
+            const telegramUrl = `https://t.me/webFenix?text=${encodedText}`;
+            
+            modal.classList.remove('open');
+            playBeep(1100, 0.15);
+            
+            // Открываем сгенерированную ссылку в новом окне
+            window.open(telegramUrl, '_blank');
         });
 
         // --- ФЕЙКОВЫЙ ЛОГ ЗАГРУЗКИ ---
