@@ -8,18 +8,30 @@
 </head>
 <body>
 
+    <audio id="bg-music" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="auto"></audio>
+
+    <div id="preloader">
+        <div class="loader-terminal">
+            <div id="log-container"></div>
+            <button id="start-btn" style="display: none;" class="cyber-btn">INITIALIZE SYSTEM (WITH AUDIO)</button>
+        </div>
+    </div>
+
     <canvas id="matrix"></canvas>
 
-    <div class="container">
-        <header class="banner-container fade-in">
+    <div class="container main-content" id="main-content">
+        
+        <button id="mute-toggle" class="mute-btn">🔊 AUDIO ON</button>
+
+        <header class="banner-container">
             <img src="banner.png" alt="Phoenix Adapter Banner" class="main-banner">
         </header>
 
-        <div class="terminal-status fade-in">
-            <span class="blink"> > </span> SYSTEM_STATUS: <span class="green-glow">READY</span> | SECURE_CONNECTION: <span class="green-glow">ESTABLISHED</span>
+        <div class="terminal-status">
+            <span class="blink"> > </span> <span id="typewriter"></span><span class="cursor">_</span>
         </div>
 
-        <main class="links-grid fade-in">
+        <main class="links-grid">
             <a href="https://t.me/qfenixqa" target="_blank" class="cyber-btn">
                 <span class="btn-text">ТГ КАНАЛ</span>
                 <span class="btn-glitch">TG_CHANNEL</span>
@@ -51,56 +63,131 @@
             </a>
         </main>
 
-        <footer class="fade-in">
+        <footer>
             <p>© 2026 PHOENIX ADAPTER. LOAD_COMPLETE. SYSTEM: ACCESS GRANTED.</p>
         </footer>
     </div>
 
     <script>
+        // --- 1. ФЕЙКОВЫЙ ЛОГ ЗАГРУЗКИ ---
+        const logs = [
+            "[CORE] LOADING PHOENIX OS v4.2...",
+            "[NET] CONNECTING TO SECURE VPN NODES...",
+            "[BYPASS] EXPLOITING FIREWALL PROTOCOLS...",
+            "[DECRYPT] DECRYPTING ENCRYPTED ASSETS...",
+            "[STATUS] BYPASS COMPLETED SUCCESSFULLY.",
+            "[SUCCESS] PHOENIX ADAPTER REBOOTED.",
+            "READY FOR ACCESS..."
+        ];
+        
+        const logContainer = document.getElementById("log-container");
+        const startBtn = document.getElementById("start-btn");
+        let logIndex = 0;
+
+        function playBeep(freq = 440, duration = 0.05) {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        function showLogs() {
+            if (logIndex < logs.length) {
+                const p = document.createElement("p");
+                p.textContent = logs[logIndex];
+                logContainer.appendChild(p);
+                playBeep(600, 0.03);
+                logIndex++;
+                setTimeout(showLogs, 400);
+            } else {
+                startBtn.style.display = "block";
+            }
+        }
+        window.addEventListener("load", showLogs);
+
+        // --- ВХОД НА САЙТ И ВКЛЮЧЕНИЕ ЗВУКА ---
+        const bgMusic = document.getElementById("bg-music");
+        const preloader = document.getElementById("preloader");
+        const mainContent = document.getElementById("main-content");
+        const muteToggle = document.getElementById("mute-toggle");
+
+        startBtn.addEventListener("click", () => {
+            preloader.style.opacity = "0";
+            setTimeout(() => {
+                preloader.style.display = "none";
+                mainContent.classList.add("active");
+                // Запуск музыки
+                bgMusic.volume = 0.2; // Громкость 20% чтобы не оглушить
+                bgMusic.play().catch(() => console.log("Audio blocked"));
+                startTypewriter();
+            }, 500);
+        });
+
+        muteToggle.addEventListener("click", () => {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                muteToggle.textContent = "🔊 AUDIO ON";
+            } else {
+                bgMusic.pause();
+                muteToggle.textContent = "🔇 MUTED";
+            }
+            playBeep(800, 0.05);
+        });
+
+        // Звуки при кликах по кнопкам
+        document.querySelectorAll(".cyber-btn").forEach(btn => {
+            btn.addEventListener("mouseenter", () => playBeep(500, 0.02));
+            btn.addEventListener("click", () => playBeep(900, 0.08));
+        });
+
+        // --- 2. ЭФФЕКТ ПЕЧАТНОЙ МАШИНКИ ---
+        const textToType = "SYSTEM_STATUS: ONLINE | SECURE_CONNECTION: ESTABLISHED | BYPASS_ACTIVE";
+        let typeIndex = 0;
+        function startTypewriter() {
+            if (typeIndex < textToType.length) {
+                document.getElementById("typewriter").textContent += textToType.charAt(typeIndex);
+                if(Math.random() > 0.3) playBeep(700, 0.01); // Звук печатного знака
+                typeIndex++;
+                setTimeout(startTypewriter, 40);
+            }
+        }
+
+        // --- 3. ЭФФЕКТ МАТРИЦЫ НА ФОНЕ ---
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
-
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
-        const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿ';
+        const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｱｲｳｴｵｶｷｸｹｺ';
         const alphabet = chars.split('');
-
         const fontSize = 16;
         const columns = canvas.width / fontSize;
-
         const rainDrops = [];
         for(let x = 0; x < columns; x++) {
             rainDrops[x] = Math.random() * -100;
         }
-
         const draw = () => {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
             ctx.fillStyle = '#00ff66';
             ctx.font = fontSize + 'px monospace';
-
             for(let i = 0; i < rainDrops.length; i++) {
                 const text = alphabet[Math.floor(Math.random() * alphabet.length)];
-                
-                if (Math.random() > 0.98) {
-                    ctx.fillStyle = '#fff';
-                } else {
-                    ctx.fillStyle = '#00ff66';
-                }
-
+                if (Math.random() > 0.98) ctx.fillStyle = '#fff';
+                else ctx.fillStyle = '#00ff66';
                 ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
-
-                if(rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975){
-                    rainDrops[i] = 0;
-                }
+                if(rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) rainDrops[i] = 0;
                 rainDrops[i]++;
             }
         };
-
         setInterval(draw, 33);
-
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
