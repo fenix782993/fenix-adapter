@@ -5,10 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHOENIX ADAPTER | SECURE HUB</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Стили для кастомного курсора-прицела */
+        body {
+            cursor: none;
+        }
+        a, button {
+            cursor: none;
+        }
+        #custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00ff66;
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.05s linear;
+        }
+        #custom-cursor::before, #custom-cursor::after {
+            content: '';
+            position: absolute;
+            background: #00ff66;
+        }
+        #custom-cursor::before {
+            top: 50%; left: -5px; width: 30px; height: 2px; transform: translateY(-50%);
+        }
+        #custom-cursor::after {
+            left: 50%; top: -5px; height: 30px; width: 2px; transform: translateX(-50%);
+        }
+        .cyber-btn:hover ~ #custom-cursor, button:hover ~ #custom-cursor {
+            transform: translate(-50%, -50%) scale(1.3);
+            border-color: #ff0055;
+        }
+
+        /* Простой CSS-эффект глитча для баннера при наведении */
+        .banner-container {
+            overflow: hidden;
+            position: relative;
+        }
+        .main-banner:hover {
+            animation: imgGlitch 0.3s infinite;
+            filter: hue-rotate(90deg);
+        }
+        @keyframes imgGlitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 2px); skewX(5deg); }
+            40% { transform: translate(3px, -1px); skewX(-5deg); }
+            60% { transform: translate(-2px, -2px); }
+            80% { transform: translate(2px, 1px); }
+            100% { transform: translate(0); }
+        }
+
+        /* --- СТИЛИ ДЛЯ ЭКВАЛАЙЗЕРА --- */
+        .audio-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border: 1px solid #00ff66;
+            border-radius: 5px;
+        }
+        .equalizer {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            width: 40px;
+            height: 25px;
+        }
+        .equalizer .bar {
+            width: 4px;
+            height: 100%;
+            background-color: #00ff66;
+            transform-origin: bottom;
+            transform: scaleY(0.1);
+        }
+        /* Анимация прыгающих полосок (активируется классом .playing) */
+        .equalizer.playing .bar {
+            animation: bounce 0.8s ease infinite alternate;
+        }
+        .equalizer.playing .bar:nth-child(2) { animation-delay: 0.2s; animation-duration: 0.6s; }
+        .equalizer.playing .bar:nth-child(3) { animation-delay: 0.4s; animation-duration: 0.9s; }
+        .equalizer.playing .bar:nth-child(4) { animation-delay: 0.1s; animation-duration: 0.7s; }
+        .equalizer.playing .bar:nth-child(5) { animation-delay: 0.3s; animation-duration: 0.5s; }
+
+        @keyframes bounce {
+            0% { transform: scaleY(0.1); }
+            100% { transform: scaleY(1); }
+        }
+    </style>
 </head>
 <body>
 
-    <audio id="bg-music" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="auto"></audio>
+    <div id="custom-cursor"></div>
+
+    <audio id="bg-music" loop src="Noggano_-_Santa_Mujerte_75208053.mp3" preload="auto"></audio>
 
     <div id="preloader">
         <div class="loader-terminal">
@@ -21,43 +118,56 @@
 
     <div class="container main-content" id="main-content">
         
-        <button id="mute-toggle" class="mute-btn">🔊 AUDIO ON</button>
+        <div class="audio-container">
+            <div class="equalizer" id="equalizer">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <button id="mute-toggle" class="mute-btn">🔊 AUDIO ON</button>
+        </div>
 
         <header class="banner-container">
             <img src="banner.png" alt="Phoenix Adapter Banner" class="main-banner">
         </header>
 
         <div class="terminal-status">
-            <span class="blink"> > </span> <span id="typewriter"></span><span class="cursor">_</span>
+            <span class="blink"> > </span> 
+            <span id="typewriter"></span><span class="cursor">_</span>
+            <div id="live-counter" style="margin-top: 5px; color: #00ff66; font-size: 0.9em; opacity: 0.8;">
+                PING: <span id="ping-val">0</span>ms | PACKETS_SHREDDED: <span id="packets-val">0</span>
+            </div>
         </div>
 
         <main class="links-grid">
-            <a href="https://t.me/qfenixqa" target="_blank" class="cyber-btn">
+            <a href="https://t.me/qfenixqa" target="_blank" class="cyber-btn" data-scramble="ТГ КАНАЛ">
                 <span class="btn-text">ТГ КАНАЛ</span>
                 <span class="btn-glitch">TG_CHANNEL</span>
             </a>
 
-            <a href="https://t.me/+-x9fbyWpSj85NmFl" target="_blank" class="cyber-btn">
+            <a href="https://t.me/+-x9fbyWpSj85NmFl" target="_blank" class="cyber-btn" data-scramble="НАШ ЧАТ">
                 <span class="btn-text">НАШ ЧАТ</span>
                 <span class="btn-glitch">COMMUNITY_CHAT</span>
             </a>
 
-            <a href="https://t.me/fenixVPNrobot" target="_blank" class="cyber-btn special">
+            <a href="https://t.me/fenixVPNrobot" target="_blank" class="cyber-btn special" data-scramble="КУПИТЬ VPN">
                 <span class="btn-text">КУПИТЬ VPN</span>
                 <span class="btn-glitch">GET_VPN</span>
             </a>
 
-            <a href="https://t.me/Fenix_stars_bot" target="_blank" class="cyber-btn">
+            <a href="https://t.me/Fenix_stars_bot" target="_blank" class="cyber-btn" data-scramble="КУПИТЬ ЗВЕЗДЫ">
                 <span class="btn-text">КУПИТЬ ЗВЕЗДЫ</span>
                 <span class="btn-glitch">BUY_STARS</span>
             </a>
 
-            <a href="https://t.me/webFenix" target="_blank" class="cyber-btn">
+            <a href="https://t.me/webFenix" target="_blank" class="cyber-btn" data-scramble="ЧАТ СО МНОЙ">
                 <span class="btn-text">ЧАТ СО МНОЙ</span>
                 <span class="btn-glitch">CONTACT_ADMIN</span>
             </a>
 
-            <a href="https://t.me/webFenix" target="_blank" class="cyber-btn love-btn">
+            <a href="https://t.me/webFenix" target="_blank" class="cyber-btn love-btn" data-scramble="ПОСТАВИТЬ ❤️">
                 <span class="btn-text">ПОСТАВИТЬ ❤️</span>
                 <span class="btn-glitch">LIKE_ADAPTER</span>
             </a>
@@ -69,7 +179,63 @@
     </div>
 
     <script>
-        // --- 1. ФЕЙКОВЫЙ ЛОГ ЗАГРУЗКИ ---
+        // --- ЛОГИКА ДВИЖЕНИЯ КУРСОРА ---
+        const cursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // --- ЖИВОЙ СЧЕТЧИК ОНЛАЙНА / ПИНГА ---
+        let packetsCount = 1423;
+        const pingVal = document.getElementById('ping-val');
+        const packetsVal = document.getElementById('packets-val');
+
+        function updateLiveStats() {
+            pingVal.textContent = Math.floor(Math.random() * (45 - 20 + 1)) + 20;
+            packetsCount += Math.floor(Math.random() * 4) + 1;
+            packetsVal.textContent = packetsCount;
+            setTimeout(updateLiveStats, Math.random() * 600 + 400);
+        }
+        updateLiveStats();
+
+        // --- ЭФФЕКТ ХАКЕРСКОЙ РАСШИФРОВКИ НА КНОПКАХ ---
+        const charsList = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｱｲｳｴｵｶｷｸｹｺ%@#$';
+        
+        document.querySelectorAll('.cyber-btn').forEach(btn => {
+            const textNode = btn.querySelector('.btn-text');
+            const originalText = btn.getAttribute('data-scramble');
+            let interval = null;
+
+            btn.addEventListener('mouseenter', () => {
+                let iteration = 0;
+                clearInterval(interval);
+                
+                interval = setInterval(() => {
+                    textNode.innerText = originalText
+                        .split("")
+                        .map((letter, index) => {
+                            if(index < iteration) {
+                                return originalText[index];
+                            }
+                            return charsList[Math.floor(Math.random() * charsList.length)];
+                        })
+                        .join("");
+                    
+                    if(iteration >= originalText.length) {
+                        clearInterval(interval);
+                    }
+                    iteration += 1 / 3; // Скорость расшифровки
+                }, 30);
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                clearInterval(interval);
+                textNode.innerText = originalText;
+            });
+        });
+
+        // --- ФЕЙКОВЫЙ ЛОГ ЗАГРУЗКИ ---
         const logs = [
             "[CORE] LOADING PHOENIX OS v4.2...",
             "[NET] CONNECTING TO SECURE VPN NODES...",
@@ -113,20 +279,22 @@
         }
         window.addEventListener("load", showLogs);
 
-        // --- ВХОД НА САЙТ И ВКЛЮЧЕНИЕ ЗВУКА ---
+        // --- ВХОД НА САЙТ, ВЫЗОВ ЭКВАЛАЙЗЕРА И ВКЛЮЧЕНИЕ МУЗЫКИ ---
         const bgMusic = document.getElementById("bg-music");
         const preloader = document.getElementById("preloader");
         const mainContent = document.getElementById("main-content");
         const muteToggle = document.getElementById("mute-toggle");
+        const equalizer = document.getElementById("equalizer");
 
         startBtn.addEventListener("click", () => {
             preloader.style.opacity = "0";
             setTimeout(() => {
                 preloader.style.display = "none";
                 mainContent.classList.add("active");
-                // Запуск музыки
-                bgMusic.volume = 0.2; // Громкость 20% чтобы не оглушить
-                bgMusic.play().catch(() => console.log("Audio blocked"));
+                bgMusic.volume = 0.25; 
+                bgMusic.play()
+                    .then(() => equalizer.classList.add('playing'))
+                    .catch(() => console.log("Audio blocked"));
                 startTypewriter();
             }, 500);
         });
@@ -134,33 +302,34 @@
         muteToggle.addEventListener("click", () => {
             if (bgMusic.paused) {
                 bgMusic.play();
+                equalizer.classList.add('playing');
                 muteToggle.textContent = "🔊 AUDIO ON";
             } else {
                 bgMusic.pause();
+                equalizer.classList.remove('playing');
                 muteToggle.textContent = "🔇 MUTED";
             }
             playBeep(800, 0.05);
         });
 
-        // Звуки при кликах по кнопкам
-        document.querySelectorAll(".cyber-btn").forEach(btn => {
+        document.querySelectorAll(".cyber-btn, button").forEach(btn => {
             btn.addEventListener("mouseenter", () => playBeep(500, 0.02));
             btn.addEventListener("click", () => playBeep(900, 0.08));
         });
 
-        // --- 2. ЭФФЕКТ ПЕЧАТНОЙ МАШИНКИ ---
+        // --- ЭФФЕКТ ПЕЧАТНОЙ МАШИНКИ ---
         const textToType = "SYSTEM_STATUS: ONLINE | SECURE_CONNECTION: ESTABLISHED | BYPASS_ACTIVE";
         let typeIndex = 0;
         function startTypewriter() {
             if (typeIndex < textToType.length) {
                 document.getElementById("typewriter").textContent += textToType.charAt(typeIndex);
-                if(Math.random() > 0.3) playBeep(700, 0.01); // Звук печатного знака
+                if(Math.random() > 0.3) playBeep(700, 0.01); 
                 typeIndex++;
                 setTimeout(startTypewriter, 40);
             }
         }
 
-        // --- 3. ЭФФЕКТ МАТРИЦЫ НА ФОНЕ ---
+        // --- ЭФФЕКТ МАТРИЦЫ НА ФОНЕ ---
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
