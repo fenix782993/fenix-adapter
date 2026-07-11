@@ -11,15 +11,15 @@
     <canvas id="matrix"></canvas>
 
     <div class="container">
-        <header class="banner-container">
+        <header class="banner-container fade-in">
             <img src="banner.png" alt="Phoenix Adapter Banner" class="main-banner">
         </header>
 
-        <div class="terminal-status">
-            <span class="blink"> > </span> STATUS: <span class="green-glow">ONLINE</span> | BYPASS PROTOCOLS: <span class="green-glow">ACTIVE</span>
+        <div class="terminal-status fade-in">
+            <span class="blink"> > </span> SYSTEM_STATUS: <span class="green-glow">READY</span> | SECURE_CONNECTION: <span class="green-glow">ESTABLISHED</span>
         </div>
 
-        <main class="links-grid">
+        <main class="links-grid fade-in">
             <a href="https://t.me/qfenixqa" target="_blank" class="cyber-btn">
                 <span class="btn-text">ТГ КАНАЛ</span>
                 <span class="btn-glitch">TG_CHANNEL</span>
@@ -45,14 +45,14 @@
                 <span class="btn-glitch">CONTACT_ADMIN</span>
             </a>
 
-            <a href="https://t.me/webFenix" target="_blank" class="cyber-btn">
+            <a href="https://t.me/webFenix" target="_blank" class="cyber-btn love-btn">
                 <span class="btn-text">ПОСТАВИТЬ ❤️</span>
                 <span class="btn-glitch">LIKE_ADAPTER</span>
             </a>
         </main>
 
-        <footer>
-            <p>© 2026 PHOENIX ADAPTER. ALL RIGHTS RESERVED. SYSTEM: ACCESS GRANTED.</p>
+        <footer class="fade-in">
+            <p>© 2026 PHOENIX ADAPTER. LOAD_COMPLETE. SYSTEM: ACCESS GRANTED.</p>
         </footer>
     </div>
 
@@ -60,30 +60,39 @@
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
 
+        // Подгоняем размер под экран
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const katakana = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1023456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const alphabet = katakana.split('');
+        // Хакерские символы (цифры, латиница, катакана)
+        const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿ';
+        const alphabet = chars.split('');
 
         const fontSize = 16;
         const columns = canvas.width / fontSize;
 
         const rainDrops = [];
-
-        for( let x = 0; x < columns; x++ ) {
-            rainDrops[x] = 1;
+        for(let x = 0; x < columns; x++) {
+            rainDrops[x] = Math.random() * -100; // Разбрасываем старт капель, чтобы они падали не одновременно
         }
 
         const draw = () => {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.08)'; // Скорость затухания шлейфа кода
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = '#0F0'; 
+            ctx.fillStyle = '#00ff66'; // Насыщенный хакерский зеленый
             ctx.font = fontSize + 'px monospace';
 
             for(let i = 0; i < rainDrops.length; i++) {
                 const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+                
+                // Делаем первую каплю в строке чуть ярче (белой), как в оригинальной Матрице
+                if (Math.random() > 0.98) {
+                    ctx.fillStyle = '#fff';
+                } else {
+                    ctx.fillStyle = '#00ff66';
+                }
+
                 ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
 
                 if(rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975){
@@ -93,7 +102,7 @@
             }
         };
 
-        setInterval(draw, 30);
+        setInterval(draw, 33);
 
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;

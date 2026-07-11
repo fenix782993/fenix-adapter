@@ -1,4 +1,3 @@
-/* Общие настройки стиля в стиле киберпанк/хакер */
 body {
     margin: 0;
     padding: 0;
@@ -8,7 +7,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Задний фон с матрицей */
+/* Фон с падающим кодом (сделан чуть ярче и контрастнее) */
 #matrix {
     position: fixed;
     top: 0;
@@ -16,30 +15,41 @@ body {
     width: 100%;
     height: 100%;
     z-index: 1;
-    opacity: 0.15; /* Делает матрицу полупрозрачной задней подложкой */
+    opacity: 0.25; 
 }
 
-/* Основной контейнер поверх матрицы */
+/* Главный контейнер */
 .container {
     position: relative;
     z-index: 2;
-    max-width: 900px;
+    max-width: 850px;
     margin: 0 auto;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    justify-content: space-between;
+    box-sizing: border-box;
 }
 
-/* Адаптивный контейнер для баннера */
+/* Анимация плавного появления при входе на сайт */
+.fade-in {
+    animation: fadeInEffect 1.5s ease-out forwards;
+}
+
+@keyframes fadeInEffect {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Стильный контейнер для баннера */
 .banner-container {
     width: 100%;
     border: 2px solid #00ff66;
-    box-shadow: 0 0 15px #00ff66;
-    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0, 255, 102, 0.4);
+    border-radius: 6px;
     overflow: hidden;
+    margin-top: 10px;
     margin-bottom: 20px;
     background: #000;
 }
@@ -50,22 +60,24 @@ body {
     display: block;
 }
 
-/* Терминальная строка */
+/* Строка терминала */
 .terminal-status {
-    background: rgba(0, 20, 0, 0.8);
-    border: 1px dashed #00ff66;
-    padding: 10px 20px;
+    background: rgba(0, 15, 5, 0.85);
+    border: 1px solid #00ff66;
+    padding: 12px;
     width: 100%;
     box-sizing: border-box;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
+    font-size: 14px;
     font-weight: bold;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    border-radius: 4px;
 }
 
 .green-glow {
     color: #fff;
-    text-shadow: 0 0 8px #00ff66;
+    text-shadow: 0 0 10px #00ff66;
 }
 
 .blink {
@@ -76,70 +88,88 @@ body {
     50% { opacity: 0; }
 }
 
-/* Сетка кнопок */
+/* Красивая раскладка кнопок (Сетка) */
 .links-grid {
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 колонки на ПК */
     gap: 15px;
+    margin-bottom: 30px;
 }
 
-/* Хакерские кибер-кнопки */
+/* Хакерские кнопки */
 .cyber-btn {
     position: relative;
-    background: transparent;
+    background: rgba(0, 0, 0, 0.6);
     border: 2px solid #00ff66;
     color: #00ff66;
-    padding: 15px;
+    padding: 18px 10px;
     text-align: center;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
-    letter-spacing: 3px;
-    overflow: hidden;
-    transition: all 0.3s ease;
+    letter-spacing: 2px;
+    transition: all 0.25s ease;
     cursor: pointer;
-    box-shadow: 0 0 5px rgba(0, 255, 102, 0.2);
+    box-shadow: 0 0 8px rgba(0, 255, 102, 0.1);
+    border-radius: 4px;
 }
 
 .cyber-btn:hover {
     background: #00ff66;
     color: #000;
-    box-shadow: 0 0 20px #00ff66;
-    font-weight: 900;
+    box-shadow: 0 0 25px #00ff66;
 }
 
-/* Выделенная кнопка (например для VPN) */
+/* Кнопка VPN (Выделенная красным) */
 .cyber-btn.special {
     border-color: #ff3366;
     color: #ff3366;
-    box-shadow: 0 0 5px rgba(255, 51, 102, 0.2);
+    box-shadow: 0 0 8px rgba(255, 51, 102, 0.1);
 }
 
 .cyber-btn.special:hover {
     background: #ff3366;
     color: #000;
-    box-shadow: 0 0 20px #ff3366;
+    box-shadow: 0 0 25px #ff3366;
 }
 
-/* Эффект смены текста при наведении (Glitch) */
-.btn-glitch {
-    display: none;
+/* Кнопка СЕРДЕЧКО (Выделенная неоновым фиолетовым/розовым) */
+.cyber-btn.love-btn {
+    border-color: #e600ff;
+    color: #e600ff;
+    box-shadow: 0 0 8px rgba(230, 0, 255, 0.1);
 }
 
-.cyber-btn:hover .btn-text {
-    display: none;
+.cyber-btn.love-btn:hover {
+    background: #e600ff;
+    color: #fff;
+    box-shadow: 0 0 25px #e600ff;
 }
 
-.cyber-btn:hover .btn-glitch {
-    display: inline;
-}
+/* Текст-эффект при наведении */
+.btn-glitch { display: none; }
+.cyber-btn:hover .btn-text { display: none; }
+.cyber-btn:hover .btn-glitch { display: inline; }
 
-/* Футер */
+/* Подвал сайта */
 footer {
-    margin-top: 40px;
+    margin-top: auto;
+    padding: 15px 0;
     text-align: center;
-    font-size: 12px;
-    color: #006622;
+    font-size: 11px;
+    color: #00551c;
+    letter-spacing: 1px;
+}
+
+/* Адаптивность для мобильных телефонов (кнопки выстраиваются в 1 ряд вертикально) */
+@media (max-width: 600px) {
+    .links-grid {
+        grid-template-columns: 1fr;
+    }
+    .cyber-btn {
+        padding: 15px 10px;
+        font-size: 15px;
+    }
 }
